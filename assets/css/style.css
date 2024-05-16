@@ -1,0 +1,233 @@
+button:hover {
+  cursor: pointer;
+}
+a {
+  text-decoration: none;
+}
+* {
+  font-family: sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+}
+
+nav {
+  height: 100%;
+  background-color: #334155;
+  position: fixed;
+  left: 0;
+  width: 350px;
+}
+
+nav .profile {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+nav .profile .avatar {
+  margin: 0 auto;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+}
+
+nav .profile .username {
+  font-size: x-large;
+  padding-top: 25px;
+  margin: 0 auto;
+  color: #cbd5e1;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+}
+
+nav .content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+nav .content .actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+nav .content .actions .wrapper {
+  padding: 25px;
+}
+
+nav .content .actions .wrapper button {
+  border: none;
+  border-radius: 0;
+}
+
+nav .content .actions .wrapper .new-task {
+  padding: 15px 30px;
+  font-weight: 500;
+  font-size: large;
+  opacity: 80%;
+  background-color: #4ade80;
+}
+
+nav .content .actions .wrapper .new-task:hover {
+  opacity: 100%;
+  color: #1e293b;
+}
+
+nav .content .information {
+  color: #fff;
+  margin: 25px;
+}
+
+nav .content .information .details {
+  font-size: x-large;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+}
+
+nav .content .information .details h4 {
+  opacity: 90%;
+  margin: 5px 0 0 0;
+}
+
+nav .content .information .details p {
+  color: #cbd5e1;
+  font-weight: 650;
+  margin: 5px 0 0 2px;
+}
+
+nav .content .information .details span {
+  color: white;
+  font-weight: 400;
+}
+
+main {
+  margin-left: 350px;
+}
+
+main .container {
+  padding: 10px 25px;
+}
+
+.tasks .title {
+  margin: 0;
+  font-size: xx-large;
+  font-weight: 700;
+}
+
+.tasks .items {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  max-height: 260px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.tasks .items table {
+  border-collapse: collapse;
+}
+
+.tasks .items table tr th {
+  height: 50px;
+}
+
+.tasks .items table .header {
+  top: 0;
+  position: sticky;
+  color: #0f172a;
+  font-size: large;
+}
+
+.tasks .items table .footer {
+  top: 0;
+  position: sticky;
+  color: #0f172a;
+  font-size: large;
+}
+
+.tasks .items table .item {
+  color: #d4d4d8;
+}
+
+.tasks .items table .actions button {
+  color: #334155;
+  font-weight: 500;
+  border: none;
+  font-size: medium;
+  padding: 5px 15px;
+  border-radius: 10;
+  margin: 0 4px;
+}
+
+.tasks .items table .actions button:hover {
+  color: #fff;
+}
+
+.tasks .items table .actions .complete {
+  background-color: #34d399;
+}
+
+.tasks .items table .actions .complete:hover {
+  background-color: #059669;
+}
+
+.tasks .items table .actions .update {
+  background-color: #fcd34d;
+}
+
+.tasks .items table .actions .update:hover {
+  background-color: #fbbf24;
+}
+
+.tasks .items table .actions .cancel {
+  background-color: #ef4444;
+}
+
+.tasks .items table .actions .cancel:hover {
+  background-color: #dc2626;
+}
+
+main .container .primary-title {
+  display: flex;
+  flex-direction: column;
+}
+
+main .container .primary-title * {
+  margin: 0 auto;
+}
+
+main .container .primary-title p {
+  margin-top: 10px;
+  font-size: x-large;
+}
+
+main .footer {
+  display: flex;
+  margin-top: 10px;
+}
+
+main .footer p {
+  font-weight: 600;
+  font-size: large;
+  margin: 0 auto;
+}
+
+main .footer a {
+  color: #38bdf8;
+}

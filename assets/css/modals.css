@@ -1,0 +1,53 @@
+.modal {
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.modal .new-task {
+  display: block;
+  color: #fff;
+  background-color: #0f172a;
+  width: 480px;
+  margin-top: 5%;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal .new-task .wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 25px;
+}
+
+.modal .new-task .wrapper h4 {
+  text-align: center;
+  font-size: x-large;
+  margin: 0 0 10px 0;
+}
+
+.modal .new-task .wrapper form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal .new-task .wrapper form label {
+  margin: 4px 0;
+}
+
+.modal .new-task .wrapper form input {
+  margin-bottom: 4px;
+}
+
+.modal .close {
+  font-size: xx-large;
+  color: #ef4444;
+  float: right;
+  margin-top: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+}

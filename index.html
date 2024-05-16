@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do List</title>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/background.css" />
+    <link rel="stylesheet" href="/assets/css/modals.css" />
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" sizes="32x32">
+  </head>
+  <body>
+    <script src="/assets/js/modal.js"></script>
+    <script src="/assets/js/tasks.js"></script>
+
+    <div id="new-task" class="modal">
+      <div class="new-task">
+        <span class="close" onclick="closeModal('new-task')">&times;</span>
+        <div class="wrapper">
+          <h4>New Task</h4>
+          <form onsubmit="createNewTask()">
+            <label for="name">Your Task Name</label>
+            <input
+              id="new-task-name"
+              name="name"
+              placeholder="Task Name"
+              type="text"
+            />
+            <label for="target">Target Date:</label>
+            <input id="new-task-target" name="target" type="date" />
+            <input type="submit" value="Submit" name="new-task" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="update-task" class="modal">
+      <div class="new-task">
+        <span class="close" onclick="closeModal('update-task')">&times;</span>
+        <div class="wrapper">
+          <h4>Update Task</h4>
+          <form onsubmit="updateTask()">
+            <label for="name">Your Task Name</label>
+            <input
+              id="update-task-name"
+              name="name"
+              placeholder="Task Name"
+              type="text"
+            />
+            <label for="target">Target Date:</label>
+            <input id="update-task-target" name="target" type="date" />
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <nav>
+      <div class="profile">
+        <img class="avatar" src="/assets/img/favicon.png" />
+        <div class="username">
+          <span>M. Yudha Abhista</span>
+        </div>
+      </div>
+      <div class="content">
+        <div class="information">
+          <div class="details">
+            <h4>Your Progression</h4>
+            <p class="completed">
+              Completed:
+              <span id="task_completed">~</span>
+            </p>
+            <p class="cancelled">
+              Cancelled:
+              <span id="task_cancelled">~</span>
+            </p>
+            <p class="on-going">
+              On Going:
+              <span id="task_ongoing">~</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="actions">
+          <div class="wrapper">
+            <button class="new-task" onclick="openModal('new-task')">
+              Create New Task
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <div class="container">
+        <div class="primary-title">
+          <h1>To Do List Manager</h1>
+          <p>Your favorite to do list application!</p>
+        </div>
+        <div class="tasks">
+          <h4 class="title">On-Going Tasks</h4>
+          <div class="items">
+            <table id="on_going_tasks_table">
+              <tr class="bg-sky header">
+                <th>Name</th>
+                <th>Deadline</th>
+                <th>Actions</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="tasks">
+          <h4 class="title">Completed Tasks</h4>
+          <div class="items">
+            <table id="completed_tasks_table">
+              <tr class="bg-green header">
+                <th>Name</th>
+                <th>Deadline</th>
+                <th>Completed At</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="tasks">
+          <h4 class="title">Cancelled Tasks</h4>
+          <div class="items">
+            <table id="cancelled_tasks_table">
+              <tr class="bg-red header">
+                <th>Name</th>
+                <th>Deadline</th>
+                <th>Cancelled At</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>Designed and developed by <a href="https://github.com/NotYusta/rpl-todo-list">Yusta</a></p>
+      </div>
+    </main>
+    <script>
+      loadPage();
+    </script>
+  </body>
+</html>
