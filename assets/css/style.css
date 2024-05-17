@@ -22,7 +22,7 @@ body {
   margin: 0;
 }
 
-nav {
+.sidebar {
   height: 100%;
   background-color: #334155;
   position: fixed;
@@ -30,20 +30,20 @@ nav {
   width: 350px;
 }
 
-nav .profile {
+.sidebar .profile {
   padding: 20px;
   display: flex;
   flex-direction: column;
 }
 
-nav .profile .avatar {
+.sidebar .profile .avatar {
   margin: 0 auto;
   width: 96px;
   height: 96px;
   border-radius: 50%;
 }
 
-nav .profile .username {
+.sidebar .profile .username {
   font-size: x-large;
   padding-top: 25px;
   margin: 0 auto;
@@ -53,28 +53,28 @@ nav .profile .username {
   justify-content: center;
 }
 
-nav .content {
+.sidebar .content {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-nav .content .actions {
+.sidebar .content .actions {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-nav .content .actions .wrapper {
+.sidebar .content .actions .wrapper {
   padding: 25px;
 }
 
-nav .content .actions .wrapper button {
+.sidebar .content .actions .wrapper button {
   border: none;
   border-radius: 0;
 }
 
-nav .content .actions .wrapper .new-task {
+.sidebar .content .actions .wrapper .new-task {
   padding: 15px 30px;
   font-weight: 500;
   font-size: large;
@@ -82,35 +82,35 @@ nav .content .actions .wrapper .new-task {
   background-color: #4ade80;
 }
 
-nav .content .actions .wrapper .new-task:hover {
+.sidebar .content .actions .wrapper .new-task:hover {
   opacity: 100%;
   color: #1e293b;
 }
 
-nav .content .information {
+.sidebar .content .information {
   color: #fff;
   margin: 25px;
 }
 
-nav .content .information .details {
+.sidebar .content .information .details {
   font-size: x-large;
   font-weight: 500;
   display: flex;
   flex-direction: column;
 }
 
-nav .content .information .details h4 {
+.sidebar .content .information .details h4 {
   opacity: 90%;
   margin: 5px 0 0 0;
 }
 
-nav .content .information .details p {
+.sidebar .content .information .details p {
   color: #cbd5e1;
   font-weight: 650;
   margin: 5px 0 0 2px;
 }
 
-nav .content .information .details span {
+.sidebar .content .information .details span {
   color: white;
   font-weight: 400;
 }
@@ -234,6 +234,7 @@ main .footer a {
 
 .mobile-open {
   display: none;
+  width: 100%;
 }
 
 .mobile-open .wrapper {
@@ -247,8 +248,34 @@ main .footer a {
   height: 5px;
   background-color: black;
 }
-@media only screen and (max-width: 640px) {
-  nav {
+
+
+.mobile-close {
+  display: none;
+  width: 100%;
+  padding: 5px 0px;
+}
+
+.mobile-close .wrapper {
+  display: block;
+  width: 100%;
+}
+
+.mobile-close .close {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+  font-size: 48px;
+  width: 30px;
+  height: 5px;
+  color: red;
+  padding: 20px 20px;
+}
+
+@media only screen and (max-width: 720px) {
+  .sidebar {
     display: none;
     width: 100%;
   }
@@ -265,5 +292,9 @@ main .footer a {
   .mobile-open {
     display: block;
     position: fixed;
+  }
+
+  .mobile-close {
+    display: flex;
   }
 }

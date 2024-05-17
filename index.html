@@ -17,6 +17,7 @@
   <body>
     <script src="assets/js/modal.js"></script>
     <script src="assets/js/tasks.js"></script>
+    <script src="assets/js/script.js"></script>
 
     <div id="new-task" class="modal">
       <div class="new-task">
@@ -58,7 +59,12 @@
         </div>
       </div>
     </div>
-    <nav id="sidebar">
+    <nav class="sidebar" id="sidebar">
+      <div class="mobile-close">
+        <div class="wrapper">
+          <span class="close" onclick="closeSidebar()">&times;</span>
+        </div>
+      </div>
       <div class="profile">
         <img class="avatar" src="assets/img/favicon.png" />
         <div class="username">
@@ -93,15 +99,15 @@
         </div>
       </div>
     </nav>
-    <div class="mobile-open">
+    <header class="mobile-open" id="mobile-open">
       <div class="wrapper">
-        <div class="open-button">
-          <hr>
-          <hr>
-          <hr>
+        <div class="open-button" onclick="openSidebar()">
+          <hr />
+          <hr />
+          <hr />
         </div>
       </div>
-    </div>
+    </header>
     <main id="main">
       <div class="container">
         <div class="primary-title">
