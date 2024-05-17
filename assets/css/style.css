@@ -250,7 +250,6 @@ main .footer a {
   background-color: black;
 }
 
-
 .mobile-close {
   display: none;
   width: 100%;
@@ -297,5 +296,10 @@ main .footer a {
 
   .mobile-close {
     display: flex;
+  }
+
+  .tasks .items table tr th {
+    height: 50px;
+    padding: 5px;
   }
 }
