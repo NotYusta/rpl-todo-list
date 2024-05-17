@@ -231,3 +231,39 @@ main .footer p {
 main .footer a {
   color: #38bdf8;
 }
+
+.mobile-open {
+  display: none;
+}
+
+.mobile-open .wrapper {
+  display: flex;
+  padding: 15px 20px;
+  cursor: pointer;
+}
+
+.mobile-open .open-button hr {
+  width: 30px;
+  height: 5px;
+  background-color: black;
+}
+@media only screen and (max-width: 640px) {
+  nav {
+    display: none;
+    width: 100%;
+  }
+
+  main {
+    padding-top: 80px;
+    margin-left: 0;
+  }
+
+  .tasks {
+    padding: 20px 0px;
+  }
+
+  .mobile-open {
+    display: block;
+    position: fixed;
+  }
+}
