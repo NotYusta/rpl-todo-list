@@ -241,6 +241,7 @@ main .footer a {
   display: flex;
   padding: 15px 20px;
   cursor: pointer;
+  justify-content: right;
 }
 
 .mobile-open .open-button hr {
