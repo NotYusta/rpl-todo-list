@@ -1,20 +1,70 @@
+const XPLevel = {
+  // REQUIRED XP GAIN TO LEVEL UP
+  // LVL 2
+  2: 5000,
+  // LVL 3,
+  3: 7000,
+  4: 9000,
+  5: 12000,
+
+  6: 17500,
+  //
+};
+
+const XPGain = {
+  COMPLETED_EARLY: 700,
+  COMPLETED: 500,
+  COMPLETED_LATE: 300,
+};
+
+/**
+ *
+ * @param {import('../../typings/users').IUser} userData
+ */
+function levelUp(userData) {
+  if (
+    (userData.level == 1 && userData.xp > XPLevel[2]) ||
+    (userData.level == 2 && userData.xp > XPLevel[3]) ||
+    (userData.level == 3 && userData.xp > XPLevel[4]) ||
+    (userData.level == 4 && userData.xp > XPLevel[5]) ||
+    (userData.level == 5 && userData.xp > XPLevel[6])
+  ) {
+    userData.xp = -1;
+  }
+
+  if (userData.xp == -1) {
+    userData.level++;
+    userData.xp = 0;
+    return true;
+  }
+
+  return false;
+}
 // bisa pake caching system biar cpu lebih efektif, but meh.
 
-let currentUpdateName = "";
-function setData(data) {
+let currentUpdateTaskData = {};
+
+function convertDateMsToDay(value) {
+  return value / 1000 / 60 / 60 / 24;
+}
+/**
+ *
+ * @param {import('../../typings/tasks').IUserTaskList[]} data
+ */
+function setTaskData(data) {
   localStorage.setItem("tasks", JSON.stringify(data));
 }
 
-function getData() {
+/**
+ *
+ * @returns {import('../../typings/tasks').IUserTaskList}
+ */
+function getTaskDataList() {
   const data = localStorage.getItem("tasks");
   if (!data) {
-    const newTasks = {
-      cancelled: [],
-      onGoing: [],
-      completed: [],
-    };
+    const newTasks = {};
 
-    setData(newTasks);
+    setTaskData(newTasks);
     return newTasks;
   }
 
@@ -22,14 +72,48 @@ function getData() {
   return parsedData;
 }
 
-function updateTask(name) {}
+/**
+ * @returns {import('../../typings/tasks').ITaskData}
+ */
+function getUserTaskData(email) {
+  /**
+   * @type {import('../../typings/tasks').IUserTaskList}
+   */
+  const data = getTaskDataList();
+  if (!data[email]) {
+    const emailData = {
+      cancelled: [],
+      completed: [],
+      on_going: [],
+    };
 
-function cancelTask(name) {
-  const data = getData();
+    data[email] = emailData;
+    setUserTaskData(email, emailData);
+  }
+
+  return data[email];
+}
+
+/**
+ * @param { String } email
+ * @param {import('../../typings/tasks').ITaskData} data
+ */
+function setUserTaskData(email, data) {
+  /**
+   * @type {import('../../typings/tasks').IUserTaskList}
+   */
+  const tasksData = getTaskDataList();
+  tasksData[email] = data;
+
+  setTaskData(tasksData);
+}
+
+function cancelTask(email, name) {
+  const taskData = getUserTaskData(email);
 
   let cancelledData = {};
   const newOnGoData = [];
-  for (const ongo of data.onGoing) {
+  for (const ongo of taskData.on_going) {
     if (ongo.name == name) {
       cancelledData = ongo;
 
@@ -43,23 +127,27 @@ function cancelTask(name) {
     newOnGoData.push(ongo);
   }
 
-  data.cancelled.push(cancelledData);
-  data.onGoing = newOnGoData;
-  setData(data);
+  taskData.cancelled.push(cancelledData);
+  taskData.on_going = newOnGoData;
+  setUserTaskData(email, taskData);
 
   alert(`Successfully cancelled ${cancelledData.name}`);
 }
 
-function completeTask(name) {
-  const data = getData();
+function completeTask(email, name) {
+  const userData = getUserData(email);
+  const taskData = getUserTaskData(email);
+  const curDate = new Date();
 
+  /**
+   * @type {import('../../typings/tasks').ICompletedTask}
+   */
   let completedData = {};
   const newOnGoData = [];
-  for (const ongo of data.onGoing) {
+  for (const ongo of taskData.on_going) {
     if (ongo.name == name) {
       completedData = ongo;
 
-      const curDate = new Date();
       completedData.completed_at = `${curDate.getFullYear()}-${curDate.getMonth()}-${curDate.getDate()}`;
       continue;
     }
@@ -67,14 +155,38 @@ function completeTask(name) {
     newOnGoData.push(ongo);
   }
 
-  data.completed.push(completedData);
-  data.onGoing = newOnGoData;
-  setData(data);
+  taskData.completed.push(completedData);
+  taskData.on_going = newOnGoData;
+  setUserTaskData(email, taskData);
 
-  alert(`Successfully mark ${completedData.name} as completed`);
+  // xp gain progress
+  const difDays = convertDateMsToDay(
+    curDate.getTime() - new Date(completedData.completed_at).getTime()
+  );
+  // early finish
+  if (difDays > 2) {
+    userData.xp += XPGain.COMPLETED_EARLY;
+    userData.total_xp += XPGain.COMPLETED_EARLY;
+  } else if (difDays < 2 && difDays > 0) {
+    userData.xp += XPGain.COMPLETED;
+    userData.total_xp += XPGain.COMPLETED;
+  } else {
+    userData.xp += XPGain.COMPLETED_LATE;
+    userData.total_xp += XPGain.COMPLETED_LATE;
+  }
+
+  if (levelUp(userData)) {
+    alert(
+      `Congratulations, you are now level ${userData.level}! - task ${completedData.name} marked as completed`
+    );
+  } else {
+    alert(`Successfully mark ${completedData.name} as completed`);
+  }
+
+  setOneUserData(userData);
 }
 
-function createOnGoElement(onGo) {
+function createOnGoElement(email, onGo) {
   const trElement = document.createElement("tr");
   trElement.classList.add("bg-gray", "item");
   const nameTh = document.createElement("th");
@@ -96,14 +208,15 @@ function createOnGoElement(onGo) {
   const completeActThValue = document.createTextNode("Mark As Completed");
   compleActTh.appendChild(completeActThValue);
   compleActTh.onclick = function () {
-    completeTask(onGo.name);
+    completeTask(email, onGo.name);
     location.reload();
   };
 
   const updateActTh = document.createElement("button");
   updateActTh.classList.add("update");
   updateActTh.onclick = function () {
-    currentUpdateName = onGo.name;
+    currentUpdateTaskData.name = onGo.name;
+    currentUpdateTaskData.target = onGo.target;
     openModal("update-task");
   };
 
@@ -113,7 +226,7 @@ function createOnGoElement(onGo) {
   const cancelActTh = document.createElement("button");
   cancelActTh.classList.add("cancel");
   cancelActTh.onclick = function () {
-    cancelTask(onGo.name);
+    cancelTask(email, onGo.name);
     location.reload();
   };
 
@@ -155,22 +268,27 @@ function createCancelledElement(onGo) {
   return trElement;
 }
 
-function createCompletedElement(onGo) {
+/**
+ *
+ * @param { import('../../typings/tasks.d.ts').ICompletedTask } completed
+ * @returns
+ */
+function createCompletedElement(completed) {
   const trElement = document.createElement("tr");
   trElement.classList.add("bg-gray", "item");
   const nameTh = document.createElement("th");
-  const nameThValue = document.createTextNode(onGo.name);
+  const nameThValue = document.createTextNode(completed.name);
   nameTh.appendChild(nameThValue);
 
   const targetTh = document.createElement("th");
   const targetThValue = document.createTextNode(
-    new Date(onGo.target).toDateString()
+    new Date(completed.target).toDateString()
   );
   targetTh.appendChild(targetThValue);
 
   const completedAtTh = document.createElement("th");
   const completedAtValue = document.createTextNode(
-    new Date(onGo.completed_at).toDateString()
+    new Date(completed.completed_at).toDateString()
   );
 
   completedAtTh.appendChild(completedAtValue);
@@ -182,11 +300,25 @@ function createCompletedElement(onGo) {
 }
 
 function loadPage() {
-  const data = getData();
+  const profileData = getProfileData();
+  if (!profileData) {
+    window.location.href = "./login.html";
+    return;
+  }
 
-  document.getElementById("task_completed").innerHTML = data.completed.length;
-  document.getElementById("task_ongoing").innerHTML = data.onGoing.length;
-  document.getElementById("task_cancelled").innerHTML = data.cancelled.length;
+  const userData = getUserData(profileData.email);
+  const email = profileData.email;
+  const userTaskData = getUserTaskData(email);
+  console.log(
+    `XP: ${userData.xp} | Level: ${userData.level} | Total XP: ${userData.total_xp}`
+  );
+  const curDate = new Date();
+  document.getElementById("task_completed").innerHTML =
+    userTaskData.completed.length;
+  document.getElementById("task_ongoing").innerHTML =
+    userTaskData.on_going.length;
+  document.getElementById("task_cancelled").innerHTML =
+    userTaskData.cancelled.length;
 
   const onGoingTasksElement = document.getElementById("on_going_tasks_table");
   const cancelledTasksElement = document.getElementById(
@@ -195,16 +327,53 @@ function loadPage() {
   const completedTasksElement = document.getElementById(
     "completed_tasks_table"
   );
-  for (const onGo of data.onGoing) {
-    onGoingTasksElement.appendChild(createOnGoElement(onGo));
+
+  let nearIncompleteTasks = 0;
+
+  document.getElementById(
+    "full_name"
+  ).innerHTML = `${userData.first_name} ${userData.last_name}`;
+  document.getElementById("level").innerHTML = `Level ${userData.level}`;
+  for (const onGo of userTaskData.on_going) {
+    const targetDate = new Date(onGo.target);
+    // convert to day
+    const difDay = convertDateMsToDay(targetDate.getTime() - curDate.getTime());
+    if (difDay < 3) {
+      nearIncompleteTasks++;
+    }
+
+    onGoingTasksElement.appendChild(createOnGoElement(email, onGo));
   }
 
-  for (const cancelled of data.cancelled) {
+  for (const cancelled of userTaskData.cancelled) {
     cancelledTasksElement.appendChild(createCancelledElement(cancelled));
   }
 
-  for (const completed of data.completed) {
+  for (const completed of userTaskData.completed) {
+    console.log(completed.name);
     completedTasksElement.appendChild(createCompletedElement(completed));
+  }
+
+  if (userTaskData.cancelled.length > 0) {
+    document.getElementById("cancelled_task_empty").style.display = "none";
+    document.getElementById("cancelled_task_items").style.display = "flex";
+  }
+
+  if (userTaskData.completed.length > 0) {
+    document.getElementById("completed_task_empty").style.display = "none";
+    document.getElementById("completed_task_items").style.display = "flex";
+  }
+
+  if (userTaskData.on_going.length > 0) {
+    document.getElementById("ongoing_task_empty").style.display = "none";
+    document.getElementById("ongoing_task_items").style.display = "flex";
+  }
+
+  if (nearIncompleteTasks > 0) {
+    document.getElementById("reminder").style.display = "block";
+    document.getElementById(
+      "reminder-text"
+    ).innerHTML = `You have ${nearIncompleteTasks} incomplete tasks that need to be completed soon.`;
   }
 }
 
@@ -227,7 +396,7 @@ function getUpdateTaskValue(id) {
 }
 
 function updateTask() {
-  if (currentUpdateName == "") {
+  if (currentUpdateTaskData.name == "") {
     alert("The data your updating is invalid!");
     return;
   }
@@ -262,21 +431,36 @@ function updateTask() {
     name: name,
     target: target,
   };
-  const data = getData();
+
+  const userData = getProfileData();
+  const taskData = getUserTaskData(userData.email);
   const newOnGoingData = [];
 
-  for (const onTask of data.onGoing) {
-    if (onTask.name == currentUpdateName) {
+  for (const onTask of taskData.on_going) {
+    if (onTask.name == name) {
+      alert("The name you're updating is already exists!");
+      return;
+    }
+  }
+
+  let updated = false;
+  for (const onTask of taskData.on_going) {
+    if (
+      onTask.name == currentUpdateTaskData.name &&
+      onTask.target == onTask.target &&
+      !updated
+    ) {
       newOnGoingData.push(dataValue);
+      updated = true;
       continue;
     }
 
     newOnGoingData.push(onTask);
   }
 
-  data.onGoing = newOnGoingData;
-  setData(data);
-  currentUpdateName = "";
+  taskData.on_going = newOnGoingData;
+  setUserTaskData(userData.email, taskData);
+  currentUpdateTaskData = {};
   alert("The task successfully updated!");
 }
 
@@ -307,8 +491,9 @@ function createNewTask() {
     return;
   }
 
-  const data = getData();
-  for (const onTask of data.onGoing) {
+  const userData = getProfileData();
+  const taskData = getUserTaskData(userData.email);
+  for (const onTask of taskData.on_going) {
     if (onTask.name == name) {
       alert("You can't set a same name while on going!");
       return;
@@ -320,7 +505,7 @@ function createNewTask() {
     target: target,
   };
 
-  data.onGoing.push(dataValue);
-  setData(data);
+  taskData.on_going.push(dataValue);
+  setUserTaskData(userData.email, taskData);
   alert("The task successfully created!");
 }
