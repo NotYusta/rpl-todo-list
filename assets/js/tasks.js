@@ -410,8 +410,7 @@ function updateTask() {
   }
 
   if (target == "") {
-    alert("The date must be not empty!");
-    return;
+    target = currentUpdateTaskData.target
   }
 
   const currentDate = new Date();
