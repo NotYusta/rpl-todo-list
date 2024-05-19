@@ -152,10 +152,6 @@ function signup() {
     return;
   }
 
-  if(isEmail(firstName) || isEmail(lastName)) {
-    alert("The name is not valid!");
-    return;
-  }
   /**
    * @type { String }
    */
@@ -173,6 +169,11 @@ function signup() {
    */
   const password = passwordDoc.value;
 
+  if(isEmail(firstName) || isEmail(lastName)) {
+    alert("The name is not valid!");
+    return;
+  }
+  
   if (!isEmail(email)) {
     alert("Invalid email! please input a valid email to continue");
     return;
