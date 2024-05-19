@@ -402,7 +402,7 @@ function updateTask() {
   }
 
   const name = getUpdateTaskValue("name");
-  const target = getUpdateTaskValue("target");
+  let target = getUpdateTaskValue("target");
 
   if (name == "") {
     alert("The name must be not empty!");
