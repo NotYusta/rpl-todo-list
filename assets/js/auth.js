@@ -74,7 +74,7 @@ function logout() {
 
 function login() {
   const emailDoc = document.getElementById("email");
-  const passwordDoc = document.getElementById("email");
+  const passwordDoc = document.getElementById("password");
 
   if (!emailDoc || emailDoc.value == "") {
     alert("The email should not be empty!");
@@ -152,6 +152,10 @@ function signup() {
     return;
   }
 
+  if(isEmail(firstName) || isEmail(lastName)) {
+    alert("The name is not valid!");
+    return;
+  }
   /**
    * @type { String }
    */
