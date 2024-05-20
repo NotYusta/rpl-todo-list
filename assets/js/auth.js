@@ -129,7 +129,7 @@ function signup() {
   const firstNameDoc = document.getElementById("first_name");
   const lastNameDoc = document.getElementById("last_name");
   const emailDoc = document.getElementById("email");
-  const passwordDoc = document.getElementById("email");
+  const passwordDoc = document.getElementById("password");
 
   // null validation
   if (!firstNameDoc || firstNameDoc.value == "") {
