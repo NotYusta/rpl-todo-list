@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do List</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/background.css" />
+    <link rel="stylesheet" href="assets/css/modals.css" />
+    <link rel="stylesheet" href="assets/css/profile.css" />
+    <link
+      rel="icon"
+      href="assets/favicon.ico"
+      type="image/x-icon"
+      sizes="32x32"
+    />
+  </head>
+  <body>
+    <script src="assets/js/profile.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/modal.js"></script>
+    <script src="assets/js/tasks.js"></script>
+    <script src="assets/js/script.js"></script>
+
+    <div id="new-task" class="modal">
+      <div class="new-task">
+        <span class="close" onclick="closeModal('new-task')">&times;</span>
+        <div class="wrapper">
+          <h4>New Task</h4>
+          <form onsubmit="createNewTask()">
+            <label for="name">Your Task Name</label>
+            <input
+              id="new-task-name"
+              name="name"
+              placeholder="Task Name"
+              type="text"
+            />
+            <label for="target">Target Date:</label>
+            <input id="new-task-target" name="target" type="date" />
+            <input type="submit" value="Submit" name="new-task" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="update-task" class="modal">
+      <div class="new-task">
+        <span class="close" onclick="closeModal('update-task')">&times;</span>
+        <div class="wrapper">
+          <h4>Update Task</h4>
+          <form onsubmit="updateTask()">
+            <label for="name">Your Task Name</label>
+            <input
+              id="update-task-name"
+              name="name"
+              placeholder="Task Name"
+              type="text"
+            />
+            <label for="target">Target Date:</label>
+            <input id="update-task-target" name="target" type="date" />
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <nav class="sidebar" id="sidebar">
+      <div class="mobile-close">
+        <a class="wrapper">
+          <span class="close" onclick="closeSidebar()">&times;</span>
+        </a>
+      </div>
+      <div class="profile">
+        <a href="./profile" class="avatar">
+          <img src="assets/img/favicon.png" />
+        </a>
+        <div class="user">
+          <span id="full_name">~</span>
+          <span class="level" id="level">~</span>
+        </div>
+      </div>
+      <div class="content">
+        <div class="actions">
+          <div class="wrapper bg-slate-800">
+            <div class="routes">
+              <h2><a href="./">Home</a></h2>
+              <h2><a href="./profile">Profile</a></h2>
+            </div>
+          </div>
+          <div class="buttons-wrapper">
+            <div class="buttons">
+              <button class="button logout" onclick="logout()">Log out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <header class="mobile-open" id="mobile-open">
+      <div class="wrapper">
+        <div class="open-button" onclick="openSidebar()">
+          <hr />
+          <hr />
+          <hr />
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <div class="container">
+        <div class="information">
+          <div class="details">
+            <h4>Your Profile</h4>
+            <div class="profile">
+              <div class="box bg-green">
+                Completed Tasks
+                <span id="task_completed">~</span>
+              </div>
+              <div class="box bg-red">
+                Cancelled Tasks
+                <span id="task_cancelled">~</span>
+              </div>
+              <div class="box bg-sky">
+                On Going Tasks
+                <span id="task_ongoing">~</span>
+              </div>
+              <div class="box bg-amber-400">
+                Total XP Gained
+                <span id="total_xp">~</span>
+              </div>
+              <div class="box bg-amber-400">
+                XP Progression
+                <span id="progression_xp">~</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <span>
+        © 2024 <a href="https://github.com/NotYusta">Yusta.</a> All Rights
+        Reserved
+      </span>
+    </footer>
+    <script>
+      loadProfile();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+main .information {
+  padding-top: 25px;
+  padding-bottom: 50px;
+}
+
+main .information .details h4 {
+  text-align: center;
+}
+
+main .information .details {
+  font-size: xx-large;
+}
+
+main .information .details p {
+  font-size: x-large;
+  margin: 0;
+}
+
+.text-yellow {
+  color: #fbbf24;
+}
+
+.text-green {
+  color: #4ade80;
+}
+
+.text-sky {
+  color: #38bdf8;
+}
+
+.text-red {
+  color: #ef4444;
+}
+
+.information .details .profile {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  padding: 40px 20px;
+}
+
+.information .details .profile .box {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+  color: #1e293b;
+  border: 3px;
+  box-shadow: #334155;
+}
+
+.information .details .profile .box span {
+  color: white;
+  padding: 10px 0;
+  opacity: 90%;
+  margin: 0 auto;
+}
+
+.information .details .profile .box a:hover,span:hover {
+  opacity: 100%;
+}
+
