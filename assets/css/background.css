@@ -2,7 +2,9 @@
     background-color: #4ade80;
 }
 
-
+.bg-slate-800 {
+    background-color: #1E293B;
+}
 .bg-red {
     background-color: #ef4444;
 }

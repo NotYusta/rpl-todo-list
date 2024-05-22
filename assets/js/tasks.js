@@ -23,11 +23,11 @@ const XPGain = {
  */
 function levelUp(userData) {
   if (
-    (userData.level == 1 && userData.xp > XPLevel[2]) ||
-    (userData.level == 2 && userData.xp > XPLevel[3]) ||
-    (userData.level == 3 && userData.xp > XPLevel[4]) ||
-    (userData.level == 4 && userData.xp > XPLevel[5]) ||
-    (userData.level == 5 && userData.xp > XPLevel[6])
+    (userData.level == 1 && userData.xp >= XPLevel[2]) ||
+    (userData.level == 2 && userData.xp >= XPLevel[3]) ||
+    (userData.level == 3 && userData.xp >= XPLevel[4]) ||
+    (userData.level == 4 && userData.xp >= XPLevel[5]) ||
+    (userData.level == 5 && userData.xp >= XPLevel[6])
   ) {
     userData.xp = -1;
   }
@@ -232,7 +232,6 @@ function createOnGoElement(email, onGo) {
 
   const cancelActThValue = document.createTextNode("Cancel");
   cancelActTh.appendChild(cancelActThValue);
-
   actionsTh.appendChild(compleActTh);
   actionsTh.appendChild(updateActTh);
   actionsTh.appendChild(cancelActTh);
@@ -313,12 +312,12 @@ function loadPage() {
     `XP: ${userData.xp} | Level: ${userData.level} | Total XP: ${userData.total_xp}`
   );
   const curDate = new Date();
-  document.getElementById("task_completed").innerHTML =
-    userTaskData.completed.length;
-  document.getElementById("task_ongoing").innerHTML =
-    userTaskData.on_going.length;
-  document.getElementById("task_cancelled").innerHTML =
-    userTaskData.cancelled.length;
+  // document.getElementById("task_completed").innerHTML =
+  //   userTaskData.completed.length;
+  // document.getElementById("task_ongoing").innerHTML =
+  //   userTaskData.on_going.length;
+  // document.getElementById("task_cancelled").innerHTML =
+  //   userTaskData.cancelled.length;
 
   const onGoingTasksElement = document.getElementById("on_going_tasks_table");
   const cancelledTasksElement = document.getElementById(
@@ -350,7 +349,6 @@ function loadPage() {
   }
 
   for (const completed of userTaskData.completed) {
-    console.log(completed.name);
     completedTasksElement.appendChild(createCompletedElement(completed));
   }
 
@@ -410,7 +408,7 @@ function updateTask() {
   }
 
   if (target == "") {
-    target = currentUpdateTaskData.target
+    target = currentUpdateTaskData.target;
   }
 
   const currentDate = new Date();

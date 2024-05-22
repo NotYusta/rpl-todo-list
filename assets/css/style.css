@@ -37,13 +37,16 @@ body {
 }
 
 .sidebar .profile {
-  padding: 20px;
+  padding: 35px;
   display: flex;
   flex-direction: column;
 }
 
 .sidebar .profile .avatar {
   margin: 0 auto;
+}
+
+.sidebar .profile .avatar img {
   width: 96px;
   height: 96px;
   border-radius: 50%;
@@ -75,27 +78,64 @@ body {
   width: 100%;
 }
 
-.sidebar .content .actions .wrapper {
+.sidebar .content a {
+  color: white;
+  opacity: 70%;
+}
+
+
+.sidebar .content a:hover {
+  opacity: 100%;
+}
+
+.sidebar .content .actions .buttons {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 0px 10px;
-  padding: 25px;
+  margin-top: 10px;
 }
 
-.sidebar .content .actions .wrapper button {
+.sidebar .content .actions .routes h2 {
+  padding: 4px 0;
+}
+
+.sidebar .content .actions .wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px;
+}
+
+.sidebar .content .actions .routes {
+  font-size: small;
+  font-weight: 300;
+  margin-left: 5px;
+}
+
+.sidebar .content .actions .buttons-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 0px 10px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.sidebar .content .actions .buttons button {
   border: none;
   border-radius: 0;
 }
 
-.sidebar .content .actions .wrapper .button {
-  padding: 10px 15px;
+.sidebar .content .actions .buttons .button {
+  padding: 15px 25px;
   font-weight: 500;
   font-size: large;
   opacity: 80%;
 }
 
-.sidebar .content .actions .wrapper .button:hover {
+.sidebar .content .actions .buttons .button:hover {
   opacity: 100%;
 }
 
@@ -104,6 +144,7 @@ body {
 }
 
 .sidebar .actions .logout {
+  color: white;
   background-color: #f43f5e;
 }
 
@@ -135,7 +176,10 @@ body {
   font-weight: 400;
 }
 
-main {
+
+
+main,
+footer {
   margin-left: 350px;
 }
 
@@ -180,7 +224,7 @@ main .container {
   font-size: large;
 }
 
-.tasks .items table .footer {
+.tasks .items table footer {
   top: 0;
   position: sticky;
   color: #0f172a;
@@ -243,13 +287,15 @@ main .container .primary-title p {
   font-size: x-large;
 }
 
-main .footer {
-  display: block;
-  text-align: center;
-  margin-top: 10px;
+footer {
+  display: flex;
+}
+footer span {
+  margin: 0 auto;
+  padding-bottom: 10px;
 }
 
-main .footer a {
+footer a {
   color: #1d4ed8;
 }
 
@@ -324,15 +370,38 @@ main .footer a {
   font-weight: 700;
 }
 
+.primary-title .actions-wrapper {
+  padding: 15px;
+}
+.primary-title .button {
+  border: 0;
+  padding: 10px 15px;
+  font-weight: 500;
+  font-size: large;
+  opacity: 80%;
+}
+
+.primary-title .button:hover {
+  opacity: 100%;
+}
+
+.primary-title .new-task {
+  background-color: #4ade80;
+}
+
 @media only screen and (max-width: 945px) {
   .sidebar {
     display: none;
     width: 100%;
   }
 
+  main,
+  footer {
+    margin-left: 0;
+  }
+
   main {
     padding-top: 80px;
-    margin-left: 0;
   }
 
   .tasks {
